@@ -1,2 +1,2 @@
 # NeuralNet_CMYK2Lab
-A project training model to transfer CMYK to Lab value
+Using Photoshop to creat Datasets and training CMYK value to Lab value model in mininmum Delta E.

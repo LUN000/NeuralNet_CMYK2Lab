@@ -255,3 +255,5 @@ Record = Record.join(TeRecord2,how='left')
 
 Record.to_csv(path+'\CMYK2Lab_Record.csv',mode='a',encoding='utf-8-sig')
 
+print('\n Finish !! \n')
+time.sleep(10)    

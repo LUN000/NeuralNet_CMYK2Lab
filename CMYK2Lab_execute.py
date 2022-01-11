@@ -10,6 +10,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
 
+print('This is CMYK2Lab based on Fogra51 ICC file','\n')
+
 #Data Loader
 class DataSet():
     def __init__(self,Datas):
@@ -67,18 +69,18 @@ class MLP(nn.Module):
         x = self.fc5(x).tanh()
         return x
 model = MLP()
-print(model)
+print('模型架構:',model)
 
-#Test
-epochs = 10000
+#Train
+epochs = eval(input('訓練回合數:'))
 optimizer = torch.optim.Adam(model.parameters())
 criterion = nn.MSELoss()
 loss_min = 0.005
 device = torch.device("cuda" if torch.cuda.is_available() else 'cpu')
-print(device)
+print('使用',device,'中')
 model.to(device)
 model.train()
-
+print(f'開始訓練{epochs}回合')
 t1 = time.time()
 for epoch in range(epochs):
     loss_total=0
@@ -118,7 +120,8 @@ for epoch in range(epochs):
         print(f'save last epoch = {epoch},loss = {loss_ave}')
 t2 = time.time()
 Time = t2-t1
-
+print(f'訓練結束，花費{Time}s','\n')
+    
 def LabRecover(data):
     Recover= []
     try:
@@ -157,7 +160,8 @@ print('平均Delta_E:', dE_TrAve)
 print('最大Delta_E:', dE_TrMax,'\n最大Delta_ELab:', MaxE_TrColor,'\n最大Delta_E算出Lab:', MaxE_TrLabOut,)
 print('最小Delta_E:', dE_TrMin,'\n最小Delta_ELab:', MinE_TrColor,'\n最小Delta_E算出Lab:', MinE_TrLabOut)
 
-#Train
+print('開始測試')
+#Test
 model = MLP()
 model.load_state_dict(torch.load('bestmodel.pt'))
 model.to(device)
